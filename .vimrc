@@ -2,7 +2,6 @@
 " Hotkeys
 "===============================================================================
 " open/close nerdtree                   Enter
-" search                                Ctrl f
 " enable/disable folding (default)      zi
 " open folding (default)                zo / Space
 " close folding (default)               zc
@@ -63,9 +62,21 @@ set foldcolumn=0
 set foldnestmax=2
 set nofoldenable
 
-" 'zi' will inverse foldenable. Reset 'zi' to change foldcolumn as well.
-:nnoremap zi :call MyFolding()<CR>
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
 
+" Hightlight search results
+set hlsearch
+
+" Show matches online when typing searching pattern
+set incsearch
+
+" Be smart about cases
+set ignorecase
+set smartcase
+
+set timeoutlen=1000 ttimeoutlen=10
 "===============================================================================
 " vim-plug
 "===============================================================================
@@ -100,32 +111,10 @@ Plug 'powerline/powerline-fonts'
 
 " workflow
 Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
-
-"===============================================================================
-" vim-tmux-navigator
-"===============================================================================
-let g:tmux_navigator_save_on_switch = 2
-let g:tmux_navigator_disable_when_zoomed = 1
-
-
-"===============================================================================
-" Search
-"===============================================================================
-
-" Hightlight search results
-set hlsearch
-
-" Show matches online when typing searching pattern
-set incsearch
-
-" Be smart about cases
-set ignorecase
-set smartcase
-
-" Use Ctrl-f to start search
-:nnoremap <C-F> /
 
 "===============================================================================
 " Colorscheme
@@ -222,5 +211,14 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Show hidden files
 let NETDTreeShowHidden=1
 
+"===============================================================================
+" Shortcuts
+"===============================================================================
+" 'zi' will inverse foldenable. Reset 'zi' to change foldcolumn as well.
+:nnoremap zi :call MyFolding()<CR>
+
+" Use fzf search
+:nnoremap <C-F> :Files<CR>
+
 " Open/close NERDTree by <Enter>
-:nnoremap <Enter> :NERDTreeToggle<CR><C-w><C-w>   
+:nnoremap <Enter> :NERDTreeToggle<CR><C-w><C-w>
