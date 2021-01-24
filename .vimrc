@@ -66,6 +66,12 @@ set nofoldenable
 " 'zi' will inverse foldenable. Reset 'zi' to change foldcolumn as well.
 :nnoremap zi :call MyFolding()<CR>
 
+"===============================================================================
+" vim-tmux-navigator
+"===============================================================================
+let g:tmux_navigator_save_on_switch = 2
+let g:tmux_navigator_disable_when_zoomed = 1
+
 
 "===============================================================================
 " Search
