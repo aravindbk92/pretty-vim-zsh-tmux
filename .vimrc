@@ -29,10 +29,11 @@ set magic
 set showmatch
 
 " Set tab to 4 spaces. 
-set ts=4            " tab stop
-set shiftwidth=4    " shift width
-set softtabstop=4
+set ts=2            " tab stop
+set shiftwidth=2    " shift width
+set softtabstop=2
 set expandtab
+set autoindent
 
 " Hightlight the 80th column
 set colorcolumn=80
@@ -77,6 +78,10 @@ set ignorecase
 set smartcase
 
 set timeoutlen=1000 ttimeoutlen=10
+
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
 "===============================================================================
 " vim-plug
 "===============================================================================
@@ -101,8 +106,17 @@ Plug 'tomasr/molokai'
 Plug 'fmoralesc/molokayo'
 Plug 'rakr/vim-one'
 
-" syntax
+" Coding
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Python
 Plug 'vim-python/python-syntax'
+Plug 'Vimjas/vim-python-pep8-indent'
+
+" Editor
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'sheerun/vim-polyglot'
 
 " Airline and its color themes
 Plug 'vim-airline/vim-airline'
@@ -115,6 +129,11 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 call plug#end()
+
+"===============================================================================
+" Plugin Settings
+"===============================================================================
+let g:python_highlight_all = 1
 
 "===============================================================================
 " Colorscheme
@@ -211,14 +230,41 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Show hidden files
 let NETDTreeShowHidden=1
 
+" Check if NERDTree is open or active
+function! IsNERDTreeOpen()        
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" file, and we're not in vimdiff
+function! SyncTree()
+  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+    NERDTreeFind
+    wincmd p
+  endif
+endfunction
+
+" Highlight currently open buffer in NERDTree
+autocmd BufRead * call SyncTree()
+
 "===============================================================================
 " Shortcuts
 "===============================================================================
+" Folding
 " 'zi' will inverse foldenable. Reset 'zi' to change foldcolumn as well.
 :nnoremap zi :call MyFolding()<CR>
 
 " Use fzf search
-:nnoremap <C-F> :Files<CR>
+:nnoremap <C-P> :Files<CR>
 
-" Open/close NERDTree by <Enter>
-:nnoremap <Enter> :NERDTreeToggle<CR><C-w><C-w>
+" Nerdtree
+:nnoremap <C-T> :NERDTreeToggle<CR><C-w><C-w>
+nnoremap <C-F> :NERDTreeFind<CR>
+
+" Editor
+nnoremap <silent> <c-_> :let @/ = ""<CR>
+
+" COC
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
