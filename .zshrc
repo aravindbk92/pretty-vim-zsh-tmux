@@ -1,3 +1,6 @@
+# Custom sources
+tmux source ~/.tmux.conf
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -36,18 +39,8 @@ antigen theme romkatv/powerlevel10k
 
 antigen apply
 
-# Custom sources
-tmux source ~/.tmux.conf
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Aliases and functions
-tmux rename-window "$(hostname -s)"
-ssh() {
-    tmux rename-window "$*"
-    command ssh "$@"
-    tmux rename-window "$(hostname -s)"
-}
 
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
