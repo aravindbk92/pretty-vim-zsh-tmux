@@ -29,4 +29,8 @@ It uses [VimPlug](https://github.com/junegunn/vim-plug) to manage plugins.
 - ```n```: New tab
 - Ctrl + Arrow keys to switch tabs
 - Shift + Arrow keys to switch windows
+- Leader + c Add new window
+- Leader + Ctrl + c Add new session
+- Leader ( Switch to left session
+- Leader ) Switch to right session
 There may be some other custom hotkeys. You can check the comments in '.tmux.config' for more infomation. 
