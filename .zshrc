@@ -17,6 +17,9 @@ CASE_SENSITIVE="true"
 # 
 HIST_STAMPS="dd/mm/yyyy"
 
+# turn off beep sound
+unsetopt BEEP
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
